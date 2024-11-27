@@ -36,6 +36,9 @@ To prevent `run.py` from trying to use a GPU for training, pass the argument `--
 
 To train/evaluate a question answering model on SQuAD instead, change `--task nli` and `--dataset snli` to `--task qa` and `--dataset squad`.
 
+## New: To Evaluate a Pretrained Model for Contrast Sets
+Simply run `python3 evaluate_contrast_sets.py` to evaluate a model on ALL contrast sets after training.
+
 **Descriptions of other important arguments are available in the comments in `run.py`.**
 
 Data and models will be automatically downloaded and cached in `~/.cache/huggingface/`.

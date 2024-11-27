@@ -7,7 +7,7 @@ from helpers import prepare_dataset_nli, prepare_train_dataset_qa, \
 import os
 import json
 
-NUM_PREPROCESSING_WORKERS = 2
+NUM_PREPROCESSING_WORKERS = 8
 
 
 def main():
@@ -59,6 +59,7 @@ def main():
         dataset_id = None
         # Load from local json/jsonl file
         dataset = datasets.load_dataset('json', data_files=args.dataset)
+        print(len(dataset))
         # By default, the "json" dataset loader places all examples in the train split,
         # so if we want to use a jsonl file for evaluation we need to get the "train" split
         # from the loaded dataset
@@ -71,6 +72,10 @@ def main():
         eval_split = 'validation_matched' if dataset_id == ('glue', 'mnli') else 'validation'
         # Load the raw data
         dataset = datasets.load_dataset(*dataset_id)
+        # print dataset key
+        print(len(dataset['train']))
+        print(len(dataset['test']))
+        print(len(dataset['validation']))
     
     # NLI models need to have the output label count specified (label 0 is "entailed", 1 is "neutral", and 2 is "contradiction")
     task_kwargs = {'num_labels': 3} if args.task == 'nli' else {}

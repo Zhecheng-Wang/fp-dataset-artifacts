@@ -4,3 +4,5 @@ torch
 tqdm
 transformers
 evaluate
+matplotlib
+openai
