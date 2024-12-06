@@ -57,6 +57,7 @@ def evaluate_contrast_set(model_path, contrast_set_path, output_dir, max_length=
     # Run evaluation
     print(f"Evaluating contrast set: {contrast_set_path}")
     results = trainer.evaluate()
+    predictions = trainer.predict(eval_dataset)
     print("Results:", results)
 
     # Save evaluation results
@@ -65,6 +66,24 @@ def evaluate_contrast_set(model_path, contrast_set_path, output_dir, max_length=
         json.dump(results, f)
 
     print(f"Evaluation completed. Results saved to {output_dir}/eval_metrics.json")
+    
+        # Save predictions
+    eval_predictions_path = os.path.join(output_dir, 'eval_predictions.jsonl')
+    with open(eval_predictions_path, 'w') as f:
+        for premise, hypothesis, label, pred_logits in zip(
+            data['premise'], data['hypothesis'], data['label'], predictions.predictions
+        ):
+            pred_label = int(pred_logits.argmax())
+            json.dump({
+                "premise": premise,
+                "hypothesis": hypothesis,
+                "label": label,
+                "predicted_scores": pred_logits.tolist(),
+                "predicted_label": pred_label
+            }, f)
+            f.write('\n')
+
+    print(f"Predictions saved to {eval_predictions_path}")
 
 
 

@@ -25,19 +25,22 @@ and check that the path it reports is for the right Python interpreter.
 ## Training and evaluating a model
 To train an ELECTRA-small model on the SNLI natural language inference dataset, you can run the following command:
 
-`python3 run.py --do_train --task nli --dataset snli --output_dir ./trained_model/`
+`python run.py --do_train --task nli --dataset snli --output_dir ./trained_model/`
 
 Checkpoints will be written to sub-folders of the `trained_model` output directory.
 To evaluate the final trained model on the SNLI dev set, you can use
 
-`python3 run.py --do_eval --task nli --dataset snli --model ./trained_model/ --output_dir ./eval_output/`
+`python run.py --do_eval --task nli --dataset snli --model ./trained_model/ --output_dir ./eval_output/`
 
 To prevent `run.py` from trying to use a GPU for training, pass the argument `--no_cuda`.
 
 To train/evaluate a question answering model on SQuAD instead, change `--task nli` and `--dataset snli` to `--task qa` and `--dataset squad`.
 
-## New: To Evaluate a Pretrained Model for Contrast Sets
-Simply run `python3 evaluate_contrast_sets.py` to evaluate a model on ALL contrast sets after training.
+## DoubleNew: To Evaluate a Pretrained Model for Contrast Sets
+Simply run `python evaluate_contrast_sets.py` to evaluate a model on ALL contrast sets after training. This will also create `eval_prediction.jsonl` files in each of the contrast sets.
+
+## Perform Error Analysis
+Open analysis directory and run `python error_analysis.py` and `python error_analysis_contrast.py` to see example errors and error statistics.
 
 **Descriptions of other important arguments are available in the comments in `run.py`.**
 
@@ -58,7 +61,7 @@ Python 3 supports virtual environments with the `venv` module. These will let yo
 to be the default (so that you can run it with `python`) and install libraries only for a particular project.
 To set up a virtual environment, use the following command:
 
-`python3 -m venv path/to/my_venv_dir`
+`python -m venv path/to/my_venv_dir`
 
 This will set up a virtual environment in the target directory.
 WARNING: This command overwrites the target directory, so choose a path that doesn't exist yet!

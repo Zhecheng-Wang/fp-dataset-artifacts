@@ -4,3 +4,4 @@ trained_model/
 eval_output/
 __pycache__/
 *.png
+*.csv
